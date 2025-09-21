@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Página de Exemplo</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 40px;
+            font-size: 36px;
+            color: #333;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        input[type="text"] {
+            display: block;
+            margin: 15px auto;
+            padding: 10px;
+            width: 250px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background-color: darkolivegreen;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .page-content {
+            padding-top: 100px; 
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 25px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+            <div style="display:flex; align-items:center; gap:16px;">
+                <h1 style="color: #fff; margin: 0; font-size:50px;">HOMEPAGE</h1>
+                {% csrf_token %}
+            {% if messages %}
+                <ul style="list-style:none; padding:0;">
+                {% for message in messages %}
+                    <li class="message {{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            </div>
+    </nav>
+    <h2>BEM VINDO, {{ user.first_name|default:user.username }}!</h2>
+    <div class="container">
+        <h2 style="color: #000000; margin: 0; font-size:30px;">Seu nome:</h2>
+        <h2 style="color: #6f0000; margin: 0; font-size:30px;">{{ user.get_full_name|default:user.username }}</h2>
+        <br><br>
+        <h2 style="color: #000000; margin: 0; font-size:30px;">Seu email:</h2>
+        <h2 style="color: #6f0000; margin: 0; font-size:30px;">{{ user.email }}</h2>
+        <br><br>
+        <h2 style="color: #000000; margin: 0; font-size:30px;">Seu ID:</h2>
+        <h2 style="color: #6f0000; margin: 0; font-size:30px;">{{ user.id }}</h2>
+        <br><br>
+        <a class="button" href="{% url 'Usuarios:logout' %}">LOGOUT</a>
+
+        <hr style="margin: 30px 0;" />
+
+        <h2 style="font-size:30px;">Gerenciar produtos</h2>
+
+        <form action="{% url 'Usuarios:add_product' %}" method="post" style="margin:20px 0;">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Nome do produto" required style="width:300px;">
+            <input type="number" name="quantity" value="1" min="1" style="width:100px; margin-top:8px;">
+            <button type="submit" class="button">Adicionar</button>
+        </form>
+
+        <h3 style="margin-top:20px;">Lista de produtos</h3>
+        {% if products %}
+            <ul style="list-style:none; padding:0; max-width:600px; margin:0 auto; text-align:left;">
+                {% for p in products %}
+                    <li style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px; border-bottom:1px solid #eee;">
+                        <div>
+                            <strong>{{ p.name }}</strong> — quantidade: {{ p.quantity }}
+                        </div>
+                        <form action="{% url 'Usuarios:remove_product' %}" method="post" style="margin:0;">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ p.id }}">
+                            <button type="submit" class="button" style="background:#c0392b;">Remover</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhum produto adicionado.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Página de Exemplo</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 40px;
+            font-size: 36px;
+            color: #333;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        input[type="text"] {
+            display: block;
+            margin: 15px auto;
+            padding: 10px;
+            width: 250px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+   
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background-color: darkolivegreen;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .page-content {
+            padding-top: 50px; 
+        }
+        .message { padding:10px; border-radius:6px; margin-bottom:8px; }
+        .message.error { background:#fdecea; color:#900; }
+        .message.success { background:#e6ffed; color:#060; }
+        .message.info { background:#eef3f7; color:#333; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h1 style="color: #fff; margin: 0; font-size:50px;">BEM VINDO</h1>
+        </div>
+    </nav>
+
+
+    <div class="page-content">
+        <h2>Escolha o método de entrada:</h2>
+        <div class="container">
+            <h2>Fazer Login:</h2>
+            <a class="button" href="{% url 'Usuarios:login' %}">LOGIN</a>
+            <h2>Se cadastrar:</h2>
+            <a class="button" href="{% url 'Usuarios:registro' %}">CADASTRO</a>
+        </div>
+    </div>
+
+</body>
+</html>
+
